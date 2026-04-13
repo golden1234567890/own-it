@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Own It — Wear What You Imagine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Archivo+Black&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --k:#0E0E0E;--w:#F5F4F0;--g4:#9A9A9A;--g2:#D4D4D4;--g1:#EBEBEB;--g6:#5A5A5A;--g8:#1E1E1E;
+  --display:'Archivo Black',sans-serif;--body:'Archivo',sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--w);color:var(--k);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+img{max-width:100%;display:block}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--w);border-bottom:1px solid var(--g1);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:60px}
+.nav-logo{font-family:var(--display);font-size:20px;letter-spacing:-.5px}
+.nav-logo span{color:var(--g4)}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:13px;font-weight:400;color:var(--g6);transition:color .15s}
+.nav-links a:hover{color:var(--k)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.lang-sw{display:flex;border:1px solid var(--g1);border-radius:6px;overflow:hidden}
+.lang-btn{padding:5px 9px;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--g4);transition:all .12s;border:none;background:transparent;cursor:pointer;font-family:inherit}
+.lang-btn.on{background:var(--k);color:var(--w)}
+.nav-cta{padding:8px 20px;border-radius:8px;background:var(--k);color:var(--w);font-size:13px;font-weight:500;letter-spacing:.2px;transition:opacity .15s}
+.nav-cta:hover{opacity:.82}
+
+/* TICKER */
+.ticker{background:var(--k);color:var(--w);padding:.55rem 0;overflow:hidden;white-space:nowrap}
+.ticker-track{display:inline-flex;gap:0;animation:ticker 22s linear infinite}
+.ticker-item{display:inline-flex;align-items:center;gap:.75rem;padding:0 2rem;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:var(--g4);flex-shrink:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;border-bottom:1px solid var(--g1)}
+.hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:4rem 3rem 4rem 3.5rem;border-right:1px solid var(--g1)}
+.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--g4);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+.hero-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--g4)}
+.hero-h1{font-family:var(--display);font-size:clamp(52px,7vw,88px);line-height:.95;letter-spacing:-2px;margin-bottom:2rem}
+.hero-h1 em{font-style:italic;font-family:var(--body);font-weight:300;font-size:.85em;color:var(--g6)}
+.hero-sub{font-size:15px;font-weight:300;color:var(--g6);line-height:1.7;max-width:400px;margin-bottom:2.5rem}
+.hero-actions{display:flex;align-items:center;gap:1rem}
+.btn-primary{padding:13px 30px;border-radius:8px;background:var(--k);color:var(--w);font-size:14px;font-weight:500;letter-spacing:.2px;transition:all .15s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-primary:hover{background:var(--g8);transform:translateY(-1px)}
+.btn-secondary{padding:13px 24px;border-radius:8px;border:1px solid var(--g2);color:var(--k);font-size:14px;font-weight:400;transition:all .15s}
+.btn-secondary:hover{border-color:var(--k);background:var(--g1)}
+.hero-proof{margin-top:2rem;display:flex;align-items:center;gap:.75rem;font-size:12px;color:var(--g4)}
+.proof-pips{display:flex}
+.pip{width:28px;height:28px;border-radius:50%;background:var(--g1);border:2px solid var(--w);margin-left:-7px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--g6)}
+.pip:first-child{margin-left:0}
+
+.hero-right{background:var(--g8);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem;gap:2rem;position:relative;overflow:hidden}
+.hero-right::before{content:'OWN IT';position:absolute;font-family:var(--display);font-size:200px;color:rgba(255,255,255,.03);letter-spacing:-8px;white-space:nowrap;pointer-events:none;user-select:none}
+.hero-shirt-stage{position:relative;z-index:1}
+.hero-shirt-stage svg{filter:drop-shadow(0 24px 48px rgba(0,0,0,.4))}
+.hero-shirt-txt{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);font-size:15px;font-weight:300;color:rgba(245,244,240,.9);letter-spacing:2px;text-align:center;pointer-events:none}
+.hero-badge{position:absolute;bottom:2rem;right:2rem;z-index:2;background:rgba(245,244,240,.08);border:1px solid rgba(245,244,240,.12);border-radius:12px;padding:.8rem 1.1rem;backdrop-filter:blur(8px)}
+.hero-badge-price{font-family:var(--display);font-size:22px;color:var(--w);line-height:1}
+.hero-badge-sub{font-size:11px;color:rgba(255,255,255,.45);margin-top:3px;letter-spacing:.5px}
+
+/* STATS STRIP */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--g1)}
+.stat{padding:1.75rem 1.5rem;border-right:1px solid var(--g1);display:flex;flex-direction:column;gap:4px}
+.stat:last-child{border-right:none}
+.stat-n{font-family:var(--display);font-size:28px;letter-spacing:-1px}
+.stat-l{font-size:12px;color:var(--g4);letter-spacing:.3px}
+
+/* HOW IT WORKS */
+.hiw{padding:5rem 3.5rem;border-bottom:1px solid var(--g1)}
+.section-eyebrow{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--g4);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.section-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--g4)}
+.section-title{font-family:var(--display);font-size:clamp(32px,4vw,48px);letter-spacing:-1.5px;line-height:1;margin-bottom:.5rem}
+.section-sub{font-size:15px;font-weight:300;color:var(--g6);line-height:1.65;max-width:480px;margin-bottom:3rem}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--g1);border:1px solid var(--g1);border-radius:16px;overflow:hidden}
+.step{background:var(--w);padding:2rem;display:flex;flex-direction:column;gap:1.25rem;transition:background .15s}
+.step:hover{background:#FAFAF8}
+.step-num{font-family:var(--display);font-size:48px;color:var(--g1);line-height:1;letter-spacing:-2px;user-select:none}
+.step-title{font-size:15px;font-weight:500;color:var(--k)}
+.step-desc{font-size:13px;font-weight:300;color:var(--g6);line-height:1.6}
+
+/* CATALOGUE */
+.catalog{padding:5rem 3.5rem;border-bottom:1px solid var(--g1);background:#FAFAF8}
+.catalog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.cat-card{border:1px solid var(--g1);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .18s;background:var(--w)}
+.cat-card:hover{border-color:var(--g2);transform:translateY(-3px)}
+.cat-visual{height:220px;background:var(--g1);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--g1);position:relative;overflow:hidden}
+.cat-visual svg{transition:transform .3s var(--ease)}
+.cat-card:hover .cat-visual svg{transform:scale(1.04)}
+.cat-info{padding:1.25rem}
+.cat-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.35rem}
+.cat-name{font-size:15px;font-weight:500}
+.cat-price{font-size:14px;font-weight:400;color:var(--g6)}
+.cat-desc{font-size:12px;color:var(--g4);margin-bottom:.75rem}
+.cat-pill{display:inline-block;padding:3px 10px;border-radius:20px;background:var(--g1);font-size:10px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;color:var(--g6)}
+
+/* VALUES */
+.values{padding:5rem 3.5rem;border-bottom:1px solid var(--g1)}
+.val-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem}
+.val-card{padding:1.5rem;border:1px solid var(--g1);border-radius:16px;transition:border-color .15s}
+.val-card:hover{border-color:var(--g2)}
+.val-icon{width:36px;height:36px;border-radius:10px;background:var(--g1);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.val-title{font-size:15px;font-weight:500;margin-bottom:.4rem}
+.val-desc{font-size:13px;font-weight:300;color:var(--g6);line-height:1.6}
+
+/* TEMPLATES SECTION */
+.tpl-section{padding:5rem 3.5rem;border-bottom:1px solid var(--g1);background:#FAFAF8}
+.tpl-showcase{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+.tpl-showcase-card{border:1px solid var(--g1);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .18s;background:var(--w)}
+.tpl-showcase-card:hover{border-color:var(--g2);transform:translateY(-2px)}
+.tpl-v{height:130px;display:flex;align-items:center;justify-content:center}
+.tpl-f{padding:.65rem .85rem;border-top:1px solid var(--g1)}
+.tpl-fn{font-size:13px;font-weight:500}
+.tpl-fm{font-size:11px;color:var(--g4);margin-top:1px}
+
+/* CTA BAND */
+.cta-band{padding:6rem 3.5rem;background:var(--k);text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.5rem;position:relative;overflow:hidden}
+.cta-band::before{content:'OWN IT';position:absolute;font-family:var(--display);font-size:220px;color:rgba(255,255,255,.025);letter-spacing:-10px;pointer-events:none;user-select:none}
+.cta-title{font-family:var(--display);font-size:clamp(36px,5vw,64px);color:var(--w);letter-spacing:-2px;line-height:1;position:relative;z-index:1}
+.cta-title em{font-style:italic;font-family:var(--body);font-weight:300;color:rgba(255,255,255,.45)}
+.cta-sub{font-size:15px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.6;max-width:400px;position:relative;z-index:1}
+.btn-white{padding:14px 34px;border-radius:8px;background:var(--w);color:var(--k);font-size:14px;font-weight:500;letter-spacing:.2px;position:relative;z-index:1;transition:all .15s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-white:hover{background:#ebe9e4;transform:translateY(-1px)}
+
+/* FOOTER */
+.footer{padding:2rem 3.5rem;border-top:1px solid var(--g1);display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:var(--display);font-size:16px;letter-spacing:-.4px}
+.footer-logo span{color:var(--g4);font-family:var(--body);font-weight:300}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:12px;color:var(--g4);transition:color .12s}
+.footer-links a:hover{color:var(--k)}
+.footer-copy{font-size:11px;color:var(--g2)}
+
+/* SCROLL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-logo">OWN<span>IT</span></div>
+  <div class="nav-links">
+    <a id="nl-studio" href="studio.html">Studio</a>
+    <a id="nl-catalog" href="#catalog" onclick="scrollTo('catalog')">Catalog</a>
+    <a id="nl-how" href="#how">How it works</a>
+    <a id="nl-about" href="#values">About</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-sw">
+      <button class="lang-btn on" onclick="setLang('en',this)">EN</button>
+      <button class="lang-btn" onclick="setLang('pt',this)">PT</button>
+      <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+    </div>
+    <button class="nav-cta" id="nav-cta" onclick="window.location.href='studio.html'">Create now</button>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span><span id="t1">Free shipping in Europe</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span><span id="t2">300 DPI premium printing</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span><span id="t3">5–7 days delivery</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span><span id="t4">Produced locally in Portugal</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span><span id="t5">14-day money-back guarantee</span></span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Free shipping in Europe</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>300 DPI premium printing</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>5–7 days delivery</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Produced locally in Portugal</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>14-day money-back guarantee</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow" id="hero-eyebrow">Shipped across Europe & beyond</div>
+    <h1 class="hero-h1" id="hero-h1">Your<br/>style,<br/><em>your rules.</em></h1>
+    <p class="hero-sub" id="hero-sub">Design your t-shirt, hoodie or cap in minutes. Full creative freedom, premium quality, delivered to your door.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" id="btn-hero" onclick="window.location.href='studio.html'">Start creating <span>↗</span></button>
+      <button class="btn-secondary" id="btn-hero2" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Browse catalog</button>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-pips">
+        <div class="pip">A</div><div class="pip">B</div><div class="pip">C</div><div class="pip">D</div>
+      </div>
+      <span id="hero-proof">2,400+ designs created this month</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-shirt-stage">
+      <svg width="210" height="246" viewBox="0 0 280 300" xmlns="http://www.w3.org/2000/svg">
+        <path d="M95,22 C95,22 105,48 140,48 C175,48 185,22 185,22 L230,42 L258,58 L242,120 L210,108 L210,278 L70,278 L70,108 L38,120 L22,58 L50,42 Z" fill="#1E1E1E" stroke="#2E2E2E" stroke-width="1"/>
+        <path d="M70,108 L38,120 L22,58 L50,42 L95,22 C92,38 84,54 70,60 Z" fill="rgba(255,255,255,.04)"/>
+        <path d="M210,108 L242,120 L258,58 L230,42 L185,22 C188,38 196,54 210,60 Z" fill="rgba(255,255,255,.04)"/>
+        <path d="M95,22 C100,38 115,48 140,48 C165,48 180,38 185,22" fill="none" stroke="#333" stroke-width="1"/>
+      </svg>
+      <div class="hero-shirt-txt">own it.</div>
+    </div>
+    <div class="hero-badge">
+      <div class="hero-badge-price" id="hero-badge-price">from 24,90 €</div>
+      <div class="hero-badge-sub" id="hero-badge-sub">shipping included</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-n">3</div><div class="stat-l" id="s1">Garments available</div></div>
+  <div class="stat"><div class="stat-n">100%</div><div class="stat-l" id="s2">Customisable</div></div>
+  <div class="stat"><div class="stat-n">5–7d</div><div class="stat-l" id="s3">Delivery time</div></div>
+  <div class="stat"><div class="stat-n">300+</div><div class="stat-l" id="s4">Happy customers</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="hiw" id="how">
+  <div class="section-eyebrow" id="hiw-eyebrow">How it works</div>
+  <h2 class="section-title reveal" id="hiw-title">Three steps,<br/>that's it.</h2>
+  <p class="section-sub reveal reveal-d1" id="hiw-sub">From design to your door in less than a week. No design skills needed.</p>
+  <div class="steps">
+    <div class="step reveal"><div class="step-num">01</div><div class="step-title" id="st1">Pick your garment</div><div class="step-desc" id="sd1">T-shirt, hoodie or cap — white, grey or black. The perfect blank canvas.</div></div>
+    <div class="step reveal reveal-d1"><div class="step-num">02</div><div class="step-title" id="st2">Customise your design</div><div class="step-desc" id="sd2">Add text, upload your logo, or start from a template. Our studio guides you every step.</div></div>
+    <div class="step reveal reveal-d2"><div class="step-num">03</div><div class="step-title" id="st3">We handle the rest</div><div class="step-desc" id="sd3">Premium DTG printing, careful packaging, fast delivery. Produced locally in Portugal.</div></div>
+  </div>
+</section>
+
+<!-- CATALOGUE -->
+<section class="catalog" id="catalog">
+  <div class="section-eyebrow" id="cat-eyebrow">Collection</div>
+  <h2 class="section-title reveal" id="cat-title">The Own It<br/>collection.</h2>
+  <p class="section-sub reveal reveal-d1" id="cat-sub">Three essentials, built for customisation. Premium fabrics, timeless cuts.</p>
+  <div class="catalog-grid">
+    <div class="cat-card reveal" onclick="window.location.href='studio.html?product=tshirt'">
+      <div class="cat-visual">
+        <svg width="120" height="140" viewBox="0 0 280 300"><path d="M95,22 C95,22 105,48 140,48 C175,48 185,22 185,22 L230,42 L258,58 L242,120 L210,108 L210,278 L70,278 L70,108 L38,120 L22,58 L50,42 Z" fill="#E4E4E0" stroke="#C8C8C4" stroke-width="1.5"/><path d="M70,108 L38,120 L22,58 L50,42 L95,22 C92,38 84,54 70,60 Z" fill="rgba(0,0,0,.04)"/><path d="M210,108 L242,120 L258,58 L230,42 L185,22 C188,38 196,54 210,60 Z" fill="rgba(0,0,0,.04)"/><path d="M95,22 C100,38 115,48 140,48 C165,48 180,38 185,22" fill="none" stroke="#C0C0BC" stroke-width="1"/></svg>
+      </div>
+      <div class="cat-info">
+        <div class="cat-row"><div class="cat-name" id="cn1">Classic T-shirt</div><div class="cat-price" id="cp1">from 27,90 €</div></div>
+        <div class="cat-desc" id="cd1">100% organic cotton · Unisex cut · Sizes XS–XL</div>
+        <div class="cat-pill" id="ct1">Organic cotton</div>
+      </div>
+    </div>
+    <div class="cat-card reveal reveal-d1" onclick="window.location.href='studio.html?product=hoodie'">
+      <div class="cat-visual">
+        <svg width="110" height="140" viewBox="0 0 280 320"><path d="M100,24 C100,24 112,52 140,52 C168,52 180,24 180,24 L228,46 L256,64 L238,130 L206,116 L206,292 L74,292 L74,116 L42,130 L24,64 L52,46 Z" fill="#E4E4E0" stroke="#C8C8C4" stroke-width="1.5"/><path d="M74,116 L42,130 L24,64 L52,46 L100,24 C97,40 88,56 74,62 Z" fill="rgba(0,0,0,.04)"/><path d="M206,116 L238,130 L256,64 L228,46 L180,24 C183,40 192,56 206,62 Z" fill="rgba(0,0,0,.04)"/><ellipse cx="140" cy="24" rx="28" ry="10" fill="rgba(0,0,0,.03)" stroke="#C0C0BC" stroke-width=".8"/><rect x="74" y="284" width="132" height="8" rx="3" fill="rgba(0,0,0,.05)"/><rect x="42" y="122" width="32" height="130" rx="4" fill="rgba(0,0,0,.025)" stroke="#C8C8C4" stroke-width=".5"/><rect x="206" y="122" width="32" height="130" rx="4" fill="rgba(0,0,0,.025)" stroke="#C8C8C4" stroke-width=".5"/></svg>
+      </div>
+      <div class="cat-info">
+        <div class="cat-row"><div class="cat-name" id="cn2">Studio Hoodie</div><div class="cat-price" id="cp2">from 39,90 €</div></div>
+        <div class="cat-desc" id="cd2">300g fleece · Kangaroo pocket · Sizes XS–XL</div>
+        <div class="cat-pill" id="ct2">300g fleece</div>
+      </div>
+    </div>
+    <div class="cat-card reveal reveal-d2" onclick="window.location.href='studio.html?product=cap'">
+      <div class="cat-visual">
+        <svg width="140" height="110" viewBox="0 0 280 240"><path d="M50,130 Q50,50 140,44 Q230,50 230,130 Q230,160 200,168 L80,168 Q50,160 50,130 Z" fill="#E4E4E0" stroke="#C8C8C4" stroke-width="1.5"/><path d="M80,168 Q140,180 200,168 Q210,172 210,176 Q140,192 70,176 Q70,172 80,168 Z" fill="#DCDCD8" stroke="#C0C0BC" stroke-width=".8"/><path d="M40,170 Q30,178 28,185 Q80,205 140,204 Q200,205 252,185 Q250,178 240,170 Q200,182 140,183 Q80,182 40,170 Z" fill="#D4D4D0" stroke="#B8B8B4" stroke-width=".8"/><path d="M90,130 Q140,124 190,130" fill="none" stroke="#C0C0BC" stroke-width=".8"/><ellipse cx="140" cy="46" rx="14" ry="6" fill="#D8D8D4" stroke="#C0C0BC" stroke-width=".8"/></svg>
+      </div>
+      <div class="cat-info">
+        <div class="cat-row"><div class="cat-name" id="cn3">Signature Cap</div><div class="cat-price" id="cp3">from 24,90 €</div></div>
+        <div class="cat-desc" id="cd3">Adjustable strapback · One size fits all</div>
+        <div class="cat-pill" id="ct3">One size</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- TEMPLATES SHOWCASE -->
+<section class="tpl-section" id="templates">
+  <div class="section-eyebrow" id="tpl-eyebrow">Templates</div>
+  <h2 class="section-title reveal" id="tpl-title">Ready to wear,<br/>ready to make yours.</h2>
+  <p class="section-sub reveal reveal-d1" id="tpl-sub">Start from an existing style and customise it in seconds.</p>
+  <div class="tpl-showcase">
+    <div class="tpl-showcase-card"><div class="tpl-v" style="background:#F0EFEA"><span style="font-size:16px;font-weight:300;color:#1E1E1E;letter-spacing:.5px">own it.</span></div><div class="tpl-f"><div class="tpl-fn">Minimal</div><div class="tpl-fm" id="tm1">Clean</div></div></div>
+    <div class="tpl-showcase-card"><div class="tpl-v" style="background:#1E1E1E"><span style="font-size:22px;font-family:'Archivo Black',sans-serif;color:#F0EFEA;letter-spacing:1px">OWN IT</span></div><div class="tpl-f"><div class="tpl-fn">Noir</div><div class="tpl-fm" id="tm2">Bold</div></div></div>
+    <div class="tpl-showcase-card"><div class="tpl-v" style="background:#F0EFEA"><span style="font-size:13px;font-weight:300;color:#1E1E1E;font-family:Georgia,serif;font-style:italic">Make it yours.</span></div><div class="tpl-f"><div class="tpl-fn">Serif</div><div class="tpl-fm" id="tm3">Elegant</div></div></div>
+    <div class="tpl-showcase-card"><div class="tpl-v" style="background:#1E1E1E"><span style="font-size:13px;font-weight:400;color:#909090;font-family:monospace">&lt;own.it&gt;</span></div><div class="tpl-f"><div class="tpl-fn">Mono</div><div class="tpl-fm" id="tm4">Tech</div></div></div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values" id="values">
+  <div class="section-eyebrow" id="val-eyebrow">Why Own It</div>
+  <h2 class="section-title reveal" id="val-title">Quality first,<br/>always.</h2>
+  <p class="section-sub reveal reveal-d1" id="val-sub">Built for people who don't compromise on what they wear.</p>
+  <div class="val-grid">
+    <div class="val-card reveal">
+      <div class="val-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7.5" stroke="#9A9A9A" stroke-width="1"/><path d="M5.5 9l2.5 2.5 5-5" stroke="#4A9E6F" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="val-title" id="vt1">Premium DTG printing</div>
+      <div class="val-desc" id="vd1">Direct-to-garment at 300 DPI. Vivid, lasting colours that survive countless washes. Produced locally in Portugal by Gelato.</div>
+    </div>
+    <div class="val-card reveal reveal-d1">
+      <div class="val-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2" stroke="#9A9A9A" stroke-width="1"/><path d="M6 5V4a3 3 0 016 0v1" stroke="#9A9A9A" stroke-width="1"/></svg></div>
+      <div class="val-title" id="vt2">Secure payment</div>
+      <div class="val-desc" id="vd2">Stripe-powered checkout, SSL encrypted. 14-day money-back guarantee if the result doesn't meet your expectations.</div>
+    </div>
+    <div class="val-card reveal reveal-d2">
+      <div class="val-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9.5l3.5 3.5 8-8" stroke="#4A9E6F" stroke-width="1.3" stroke-linecap="round"/><circle cx="9" cy="9" r="7.5" stroke="#9A9A9A" stroke-width="1"/></svg></div>
+      <div class="val-title" id="vt3">Tracked delivery</div>
+      <div class="val-desc" id="vd3">Shipped within 48h from our Portuguese hub. Tracked in real time, delivered in 5–7 days across Europe. Free shipping on all orders.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <h2 class="cta-title" id="cta-title">Ready to create<br/><em>something unique?</em></h2>
+  <p class="cta-sub" id="cta-sub">Join hundreds of people who chose to wear what they imagine. Start free, no account needed.</p>
+  <button class="btn-white" onclick="window.location.href='studio.html'"><span id="cta-btn">Launch the studio</span> ↗</button>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">OWN<span> it</span></div>
+  <div class="footer-links">
+    <a id="fl1">Terms</a><a id="fl2">Privacy</a><a id="fl3">Contact</a><a id="fl4">FAQ</a>
+  </div>
+  <div class="footer-copy">© 2025 Own It Studio · Made in Lisbon</div>
+</footer>
+
+
+
+<script>
+/* ──────────────── LANG ──────────────── */
+const LANG={
+  en:{
+    nav:['Studio','Catalog','How it works','About'],'nav-cta':'Create now',
+    ticker:['Free shipping in Europe','300 DPI premium printing','5–7 days delivery','Produced locally in Portugal','14-day money-back guarantee'],
+    eyebrow:'Shipped across Europe & beyond',h1:'Your\nstyle,\n<em>your rules.</em>',
+    sub:'Design your t-shirt, hoodie or cap in minutes. Full creative freedom, premium quality, delivered to your door.',
+    'btn-hero':'Start creating','btn-hero2':'Browse catalog',proof:'2,400+ designs created this month',
+    badge:'from 24,90 €','badge-sub':'shipping included',
+    s:['Garments available','Customisable','Delivery time','Happy customers'],
+    'hiw-eyebrow':'How it works','hiw-title':'Three steps,\nthat\'s it.','hiw-sub':'From design to your door in less than a week. No design skills needed.',
+    st:['Pick your garment','Customise your design','We handle the rest'],
+    sd:['T-shirt, hoodie or cap — white, grey or black. The perfect blank canvas.','Add text, upload your logo, or start from a template. Our studio guides you every step.','Premium DTG printing, careful packaging, fast delivery. Produced locally in Portugal.'],
+    'cat-eyebrow':'Collection','cat-title':'The Own It\ncollection.','cat-sub':'Three essentials, built for customisation. Premium fabrics, timeless cuts.',
+    cn:['Classic T-shirt','Studio Hoodie','Signature Cap'],cp:['from 27,90 €','from 39,90 €','from 24,90 €'],
+    cd:['100% organic cotton · Unisex cut · Sizes XS–XL','300g fleece · Kangaroo pocket · Sizes XS–XL','Adjustable strapback · One size fits all'],
+    ct:['Organic cotton','300g fleece','One size'],
+    'studio-eyebrow':'Studio','studio-title':'Design yours.','studio-sub':'Customise every detail, then order in one click. Gelato prints and ships from Portugal.',
+    tabs:['Text','Image','Templates'],
+    'sl-msg':'Your message','sl-font':'Font','sl-weight':'Weight','sl-size':'Size','sl-color':'Text color',
+    'sl-upload':'Logo or illustration','sl-drop':'Click or drag to import','sl-fmt':'PNG, SVG — transparent bg recommended',
+    'sl-imgsize':'Size','sl-remove':'Remove image','sl-quality':'Quality guide',
+    'q-htxt':'For the best print result',
+    q:['<b>PNG or SVG</b> with transparent background','<b>300 DPI min.</b> — at least 150×150 px','<b>High contrast</b> for fine detail','Avoid <b>compressed JPGs</b>','Avoid <b>screenshots</b> (72 DPI)'],
+    'sl-tpl':'Ready-made styles','sl-total':'Total','sl-ship':'€ · shipping included','sl-order':'Add to cart ↗',
+    'tpl-eyebrow':'Templates','tpl-title':'Ready to wear,\nready to make yours.','tpl-sub':'Start from an existing style and customise it in seconds.',
+    tm:['Clean','Bold','Elegant','Tech'],
+    'val-eyebrow':'Why Own It','val-title':'Quality first,\nalways.','val-sub':"Built for people who don't compromise on what they wear.",
+    vt:['Premium DTG printing','Secure payment','Tracked delivery'],
+    vd:['Direct-to-garment at 300 DPI. Vivid, lasting colours that survive countless washes. Produced locally in Portugal by Gelato.','Stripe-powered checkout, SSL encrypted. 14-day money-back guarantee if the result doesn\'t meet your expectations.','Shipped within 48h from our Portuguese hub. Tracked in real time, delivered in 5–7 days across Europe. Free shipping on all orders.'],
+    'cta-title':'Ready to create\n<em>something unique?</em>','cta-sub':'Join hundreds of people who chose to wear what they imagine. Start free, no account needed.','cta-btn':'Launch the studio',
+    fl:['Terms','Privacy','Contact','FAQ'],
+    'm-title':'Complete your order',ml:['First name','Last name','Email','Delivery address','City','Postal code','Country'],
+    'ml-secure':'Secure payment · SSL · Stripe',
+    'g-btns':['T-shirt','Hoodie','Cap'],
+    's-color-lbl':'Color',
+  },
+  pt:{
+    nav:['Estúdio','Catálogo','Como funciona','Sobre'],'nav-cta':'Criar agora',
+    ticker:['Envio gratuito na Europa','Impressão premium 300 DPI','Entrega em 5–7 dias','Produzido localmente em Portugal','Garantia de reembolso de 14 dias'],
+    eyebrow:'Entrega em toda a Europa e além',h1:'O teu\nestilo,\n<em>as tuas regras.</em>',
+    sub:'Cria a tua t-shirt, hoodie ou boné em minutos. Total liberdade criativa, qualidade premium, entregue em casa.',
+    'btn-hero':'Começar a criar','btn-hero2':'Ver catálogo',proof:'2.400+ criações este mês',
+    badge:'a partir de 24,90 €','badge-sub':'envio incluído',
+    s:['Peças disponíveis','Personalizável','Prazo de entrega','Clientes satisfeitos'],
+    'hiw-eyebrow':'Como funciona','hiw-title':'Três passos,\nsó isso.','hiw-sub':'Do design à tua porta em menos de uma semana. Sem precisar de saber design.',
+    st:['Escolhe a tua peça','Personaliza o design','Nós tratamos do resto'],
+    sd:['T-shirt, hoodie ou boné — branco, cinza ou preto. A tela perfeita.','Adiciona texto, faz upload do teu logo, ou parte de um template. O estúdio guia-te.','Impressão premium DTG, embalagem cuidada, entrega rápida. Produzido localmente em Portugal.'],
+    'cat-eyebrow':'Coleção','cat-title':'A coleção\nOwn It.','cat-sub':'Três essenciais, feitos para personalização. Tecidos premium, cortes atemporais.',
+    cn:['T-shirt Classic','Hoodie Studio','Boné Signature'],cp:['a partir de 27,90 €','a partir de 39,90 €','a partir de 24,90 €'],
+    cd:['100% algodão orgânico · Corte unissexo · Tamanhos XS–XL','Fleece 300g · Bolso canguru · Tamanhos XS–XL','Strapback ajustável · Tamanho único'],
+    ct:['Algodão orgânico','Fleece 300g','Tamanho único'],
+    'studio-eyebrow':'Estúdio','studio-title':'Cria o teu.','studio-sub':'Personaliza cada detalhe e faz a tua encomenda com um clique. A Gelato imprime e envia de Portugal.',
+    tabs:['Texto','Imagem','Templates'],
+    'sl-msg':'A tua mensagem','sl-font':'Fonte','sl-weight':'Espessura','sl-size':'Tamanho','sl-color':'Cor do texto',
+    'sl-upload':'Logo ou ilustração','sl-drop':'Clica ou arrasta para importar','sl-fmt':'PNG, SVG — fundo transparente recomendado',
+    'sl-imgsize':'Tamanho','sl-remove':'Remover imagem','sl-quality':'Guia de qualidade',
+    'q-htxt':'Para o melhor resultado de impressão',
+    q:['<b>PNG ou SVG</b> com fundo transparente','<b>300 DPI mín.</b> — pelo menos 150×150 px','<b>Alto contraste</b> para detalhes finos','Evita <b>JPGs comprimidos</b>','Evita <b>capturas de ecrã</b> (72 DPI)'],
+    'sl-tpl':'Estilos prontos','sl-total':'Total','sl-ship':'€ · envio incluído','sl-order':'Adicionar ao carrinho ↗',
+    'tpl-eyebrow':'Templates','tpl-title':'Prontos a vestir,\nprontos a ser teus.','tpl-sub':'Parte de um estilo existente e personaliza-o em segundos.',
+    tm:['Limpo','Ousado','Elegante','Tech'],
+    'val-eyebrow':'Porquê Own It','val-title':'Qualidade\nacima de tudo.','val-sub':'Feito para quem não faz concessões naquilo que veste.',
+    vt:['Impressão DTG premium','Pagamento seguro','Entrega rastreada'],
+    vd:['Impressão direta no tecido a 300 DPI. Cores vivas e duradouras. Produzido localmente em Portugal pela Gelato.','Checkout Stripe, encriptado com SSL. Garantia de reembolso de 14 dias se não ficares satisfeito.','Enviado em 48h a partir do nosso hub em Portugal. Rastreado em tempo real, entregue em 5 a 7 dias na Europa.'],
+    'cta-title':'Pronto para criar\n<em>algo único?</em>','cta-sub':'Junta-te a centenas de pessoas que escolheram vestir o que imaginam. Começa gratuitamente.','cta-btn':'Abrir o estúdio',
+    fl:['Termos','Privacidade','Contacto','FAQ'],
+    'm-title':'Completa a tua encomenda',ml:['Nome','Apelido','Email','Morada','Cidade','Código postal','País'],
+    'ml-secure':'Pagamento seguro · SSL · Stripe',
+    'g-btns':['T-shirt','Hoodie','Boné'],
+    's-color-lbl':'Cor',
+  },
+  fr:{
+    nav:['Studio','Catalogue','Comment ça marche','À propos'],'nav-cta':'Créer maintenant',
+    ticker:['Livraison gratuite en Europe','Impression premium 300 DPI','Livraison en 5–7 jours','Produit localement au Portugal','Garantie remboursement 14 jours'],
+    eyebrow:'Livraison partout en Europe et au-delà',h1:'Ton\nstyle,\n<em>tes règles.</em>',
+    sub:'Crée ton t-shirt, pull ou casquette en quelques minutes. Liberté créative totale, qualité premium, livré chez toi.',
+    'btn-hero':'Commencer à créer','btn-hero2':'Voir le catalogue',proof:'2 400+ créations ce mois-ci',
+    badge:'dès 24,90 €','badge-sub':'livraison incluse',
+    s:['Vêtements disponibles','Personnalisable','Délai de livraison','Clients satisfaits'],
+    'hiw-eyebrow':'Comment ça marche','hiw-title':'Trois étapes,\nc\'est tout.','hiw-sub':'Du design à ta porte en moins d\'une semaine. Sans compétences en design.',
+    st:['Choisis ton vêtement','Personnalise ton design','On s\'occupe du reste'],
+    sd:['T-shirt, pull ou casquette — blanc, gris ou noir. La toile parfaite.','Ajoute ton texte, uploade ton logo, ou pars d\'un template. Notre studio te guide à chaque étape.','Impression DTG premium, emballage soigné, livraison rapide. Produit localement au Portugal.'],
+    'cat-eyebrow':'Collection','cat-title':'La collection\nOwn It.','cat-sub':'Trois essentiels, taillés pour la customisation. Matières premium, coupes intemporelles.',
+    cn:['T-shirt Classic','Pull Studio','Casquette Signature'],cp:['à partir de 27,90 €','à partir de 39,90 €','à partir de 24,90 €'],
+    cd:['100% coton bio · Coupe unisexe · Tailles XS–XL','Molleton 300g · Poche kangourou · Tailles XS–XL','Strapback ajustable · Taille unique'],
+    ct:['Coton bio','Molleton 300g','Taille unique'],
+    'studio-eyebrow':'Studio','studio-title':'Crée le tien.','studio-sub':'Personnalise chaque détail, puis commande en un clic. Gelato imprime et expédie depuis le Portugal.',
+    tabs:['Texte','Image','Templates'],
+    'sl-msg':'Votre message','sl-font':'Police','sl-weight':'Graisse','sl-size':'Taille','sl-color':'Couleur du texte',
+    'sl-upload':'Logo ou illustration','sl-drop':'Cliquez ou glissez pour importer','sl-fmt':'PNG, SVG — fond transparent recommandé',
+    'sl-imgsize':'Taille','sl-remove':'Supprimer l\'image','sl-quality':'Guide qualité',
+    'q-htxt':'Pour un rendu optimal',
+    q:['<b>PNG ou SVG</b> avec fond transparent','<b>300 DPI min.</b> — au moins 150×150 px','<b>Contraste élevé</b> pour les détails fins','Évitez les <b>JPG compressés</b>','Évitez les <b>captures d\'écran</b> (72 DPI)'],
+    'sl-tpl':'Styles prêts à l\'emploi','sl-total':'Total','sl-ship':'€ · livraison incluse','sl-order':'Ajouter au panier ↗',
+    'tpl-eyebrow':'Templates','tpl-title':'Prêts à porter,\nprêts à personnaliser.','tpl-sub':'Pars d\'un style existant et fais-le tien en quelques secondes.',
+    tm:['Épuré','Puissant','Élégant','Tech'],
+    'val-eyebrow':'Pourquoi Own It','val-title':'La qualité\navant tout.','val-sub':'Conçu pour ceux qui ne font pas de compromis sur ce qu\'ils portent.',
+    vt:['Impression DTG premium','Paiement sécurisé','Livraison suivie'],
+    vd:['Impression directe sur tissu à 300 DPI. Couleurs vives et durables. Produit localement au Portugal par Gelato.','Paiement Stripe, chiffrement SSL. Remboursement garanti 14 jours si le résultat ne te convient pas.','Expédié en 48h depuis notre hub portugais. Suivi en temps réel, livré en 5 à 7 jours en Europe.'],
+    'cta-title':'Prêt à créer\n<em>quelque chose d\'unique ?</em>','cta-sub':'Rejoins les centaines de personnes qui ont choisi de porter ce qu\'elles imaginent. Gratuit, sans compte.','cta-btn':'Lancer le studio',
+    fl:['CGV','Confidentialité','Contact','FAQ'],
+    'm-title':'Finaliser votre commande',ml:['Prénom','Nom','Email','Adresse de livraison','Ville','Code postal','Pays'],
+    'ml-secure':'Paiement sécurisé · SSL · Stripe',
+    'g-btns':['T-shirt','Pull','Casquette'],
+    's-color-lbl':'Couleur',
+  }
+};
+
+function setLang(l,btn){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const t=LANG[l];
+  // Nav
+  const nls=document.querySelectorAll('.nav-links a');
+  t.nav.forEach((v,i)=>{if(nls[i])nls[i].textContent=v});
+  document.getElementById('nav-cta').textContent=t['nav-cta'];
+  // Hero
+  document.getElementById('hero-eyebrow').textContent=t.eyebrow;
+  document.getElementById('hero-h1').innerHTML=t.h1.split('\n').join('<br/>');
+  document.getElementById('hero-sub').textContent=t.sub;
+  document.getElementById('btn-hero').innerHTML=t['btn-hero']+' <span>↗</span>';
+  document.getElementById('btn-hero2').textContent=t['btn-hero2'];
+  document.getElementById('hero-proof').textContent=t.proof;
+  document.getElementById('hero-badge-price').textContent=t.badge;
+  document.getElementById('hero-badge-sub').textContent=t['badge-sub'];
+  // Stats
+  t.s.forEach((v,i)=>{const el=document.getElementById('s'+(i+1));if(el)el.textContent=v});
+  // HIW
+  ['hiw-eyebrow','hiw-title','hiw-sub'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.innerHTML=t[id].replace(/\n/g,'<br/>');
+  });
+  t.st.forEach((v,i)=>{const el=document.getElementById('st'+(i+1));if(el)el.textContent=v});
+  t.sd.forEach((v,i)=>{const el=document.getElementById('sd'+(i+1));if(el)el.textContent=v});
+  // Catalog
+  ['cat-eyebrow','cat-title','cat-sub'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.innerHTML=t[id].replace(/\n/g,'<br/>');
+  });
+  t.cn.forEach((v,i)=>{const el=document.getElementById('cn'+(i+1));if(el)el.textContent=v});
+  t.cp.forEach((v,i)=>{const el=document.getElementById('cp'+(i+1));if(el)el.textContent=v});
+  t.cd.forEach((v,i)=>{const el=document.getElementById('cd'+(i+1));if(el)el.textContent=v});
+  t.ct.forEach((v,i)=>{const el=document.getElementById('ct'+(i+1));if(el)el.textContent=v});
+  // Studio
+  // (studio is on a separate page — studio.html)
+  // Templates
+  ['tpl-eyebrow','tpl-title','tpl-sub'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=t[id].replace(/\n/g,'<br/>');});
+  t.tm.forEach((v,i)=>{const el=document.getElementById('tm'+(i+1));if(el)el.textContent=v});
+  // Values
+  ['val-eyebrow','val-title','val-sub'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=t[id].replace(/\n/g,'<br/>');});
+  t.vt.forEach((v,i)=>{const el=document.getElementById('vt'+(i+1));if(el)el.textContent=v});
+  t.vd.forEach((v,i)=>{const el=document.getElementById('vd'+(i+1));if(el)el.textContent=v});
+  // CTA
+  document.getElementById('cta-title').innerHTML=t['cta-title'].replace(/\n/g,'<br/>');
+  document.getElementById('cta-sub').textContent=t['cta-sub'];
+  document.getElementById('cta-btn').textContent=t['cta-btn'];
+  // Footer
+  t.fl.forEach((v,i)=>{const el=document.getElementById('fl'+(i+1));if(el)el.textContent=v});
+}
+
+/* ──────────────── SCROLL REVEAL ──────────────── */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

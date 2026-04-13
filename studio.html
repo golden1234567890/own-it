@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Own It — Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Archivo+Black&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --k:#0E0E0E;--w:#F5F4F0;--g4:#9A9A9A;--g2:#D4D4D4;--g1:#EBEBEB;--g6:#5A5A5A;--g8:#1E1E1E;
+  --display:'Archivo Black',sans-serif;--body:'Archivo',sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+html{height:100%}
+body{font-family:var(--body);background:var(--w);color:var(--k);-webkit-font-smoothing:antialiased;overflow:hidden;height:100%;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;border-bottom:1px solid var(--g1);background:var(--w);flex-shrink:0;z-index:10}
+.nav-left{display:flex;align-items:center;gap:1.5rem}
+.nav-logo{font-family:var(--display);font-size:17px;letter-spacing:-.4px;color:var(--k);text-decoration:none}
+.nav-logo span{color:var(--g4);font-family:var(--body);font-weight:300}
+.nav-back{display:flex;align-items:center;gap:.4rem;font-size:12px;color:var(--g4);cursor:pointer;transition:color .12s;padding:5px 0}
+.nav-back:hover{color:var(--k)}
+.nav-back svg{flex-shrink:0}
+.nav-divider{width:1px;height:18px;background:var(--g1)}
+.nav-studio-lbl{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--g4)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.lang-sw{display:flex;border:1px solid var(--g1);border-radius:6px;overflow:hidden}
+.lang-btn{padding:4px 8px;font-size:10px;font-weight:500;letter-spacing:.5px;color:var(--g4);border:none;background:transparent;cursor:pointer;font-family:inherit;transition:all .12s}
+.lang-btn.on{background:var(--k);color:var(--w)}
+.nav-cart{display:flex;align-items:center;gap:.4rem;padding:7px 16px;border-radius:8px;border:1px solid var(--g1);font-size:12px;font-weight:500;color:var(--k);transition:background .12s;background:var(--w)}
+.nav-cart:hover{background:var(--g1)}
+
+/* STUDIO LAYOUT */
+.studio{display:grid;grid-template-columns:1fr 340px;flex:1;overflow:hidden;min-height:0}
+
+/* PREVIEW PANEL */
+.preview{background:#EEEDE8;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.garment-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.5rem;border-bottom:1px solid rgba(0,0,0,.06)}
+.garment-sw{display:flex;gap:4px;background:rgba(255,255,255,.7);padding:3px;border-radius:9px;border:1px solid rgba(0,0,0,.06)}
+.gw{padding:5px 16px;border-radius:7px;font-size:12px;font-weight:500;color:var(--g6);transition:all .15s;border:none;background:transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
+.gw.on{background:var(--k);color:var(--w)}
+.preview-hint{font-size:11px;color:var(--g4);letter-spacing:.3px}
+
+.stage{flex:1;display:flex;align-items:center;justify-content:center;position:relative;padding:2rem}
+.garment-svg{display:none;filter:drop-shadow(0 8px 32px rgba(0,0,0,.1))}
+.garment-svg.on{display:block}
+.otxt{position:absolute;top:50%;left:50%;transform:translate(-50%,-48%);text-align:center;pointer-events:none;max-width:160px;word-break:break-word;line-height:1.2;font-size:20px;font-weight:500;color:var(--k);transition:font-size .1s}
+.oimg{position:absolute;top:50%;left:50%;transform:translate(-50%,-48%);max-width:100px;max-height:100px;object-fit:contain;display:none}
+
+.preview-foot{padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(0,0,0,.06)}
+.color-strip{display:flex;align-items:center;gap:.75rem}
+.clbl{font-size:10px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:var(--g6)}
+.cdots{display:flex;gap:6px}
+.cd{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .12s;position:relative}
+.cd.on{border-color:var(--k)}
+.cd.light{box-shadow:0 0 0 1px #C8C8C4}
+.price-pill{background:var(--k);color:var(--w);padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;letter-spacing:-.2px}
+.price-pill span{font-family:var(--display);font-size:15px;letter-spacing:-.5px}
+
+/* CONTROL PANEL */
+.panel{display:flex;flex-direction:column;border-left:1px solid var(--g1);background:var(--w);overflow:hidden}
+.tabs{display:flex;border-bottom:1px solid var(--g1);flex-shrink:0}
+.tab{flex:1;padding:13px 4px;font-size:10px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;color:var(--g4);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;transition:all .12s}
+.tab.on{color:var(--k);border-bottom-color:var(--k)}
+.panel-body{flex:1;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:1.1rem}
+.panel-body::-webkit-scrollbar{width:4px}
+.panel-body::-webkit-scrollbar-thumb{background:var(--g2);border-radius:2px}
+
+/* Form elements */
+.lbl{font-size:10px;font-weight:500;letter-spacing:.9px;text-transform:uppercase;color:var(--g4);margin-bottom:5px;display:block}
+.inp{width:100%;padding:10px 12px;border:1px solid var(--g1);border-radius:8px;font-size:14px;color:var(--k);background:var(--w);font-family:inherit;outline:none;transition:border-color .15s}
+.inp:focus{border-color:var(--k)}
+.sel{width:100%;padding:9px 10px;border:1px solid var(--g1);border-radius:8px;font-size:12px;color:var(--k);background:var(--w);font-family:inherit;outline:none;transition:border-color .12s}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.slrow{display:flex;align-items:center;gap:9px}
+.slrow input[type=range]{flex:1;accent-color:var(--k);height:3px}
+.slv{font-size:11px;color:var(--g4);min-width:32px;text-align:right}
+.tc-row{display:flex;gap:6px}
+.tc{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .12s}
+.tc.on{border-color:var(--k)}
+
+/* Upload */
+.ubox{border:1px dashed var(--g2);border-radius:10px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .12s}
+.ubox:hover{border-color:var(--k);background:#FAFAF8}
+.uplus{font-size:28px;color:var(--g2);margin-bottom:.4rem;line-height:1;transition:color .12s}
+.ubox:hover .uplus{color:var(--g4)}
+.umain{font-size:13px;font-weight:500;color:var(--k)}
+.usub{font-size:11px;color:var(--g4);margin-top:3px}
+.ictrl{display:none;flex-direction:column;gap:8px}
+.rm{font-size:11px;color:var(--g4);cursor:pointer;text-align:center;padding:6px 12px;border-radius:6px;border:1px solid var(--g1);transition:background .12s}
+.rm:hover{background:var(--g1)}
+
+/* Quality card */
+.qcard{border:1px solid var(--g1);border-radius:10px;overflow:hidden}
+.qhead{padding:8px 12px;background:#FAFAF8;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--g1)}
+.qi{width:18px;height:18px;border-radius:50%;background:#B8842A;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700;flex-shrink:0}
+.qh{font-size:11px;font-weight:500;color:var(--k)}
+.qrow{display:flex;align-items:flex-start;gap:7px;padding:7px 12px}
+.qrow+.qrow{border-top:1px solid var(--g1)}
+.qdot{width:6px;height:6px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.ok{background:#4A9E6F}.warn{background:#B8842A}
+.qt{font-size:11px;color:var(--g6);line-height:1.45}
+.qt b{color:var(--k);font-weight:500}
+
+/* Templates */
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tpl{border:1px solid var(--g1);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s}
+.tpl:hover{border-color:var(--k)}
+.tpl.on{border-color:var(--k);background:#FAFAF8}
+.tsw{width:28px;height:28px;border-radius:50%;margin:0 auto 6px;border:1px solid rgba(0,0,0,.07)}
+.tn{font-size:12px;font-weight:500;color:var(--k)}
+.tm{font-size:10px;color:var(--g4);margin-top:2px}
+
+/* Panel foot */
+.panel-foot{border-top:1px solid var(--g1);padding:1rem 1.25rem;display:flex;flex-direction:column;gap:.85rem;flex-shrink:0}
+.szrow{display:flex;gap:5px}
+.sz{width:38px;height:34px;border-radius:7px;border:1px solid var(--g1);font-size:11px;font-weight:500;color:var(--g4);background:var(--w);font-family:inherit;cursor:pointer;transition:all .12s}
+.sz.on{background:var(--k);color:var(--w);border-color:var(--k)}
+.prow{display:flex;align-items:baseline;justify-content:space-between}
+.plbl{font-size:11px;color:var(--g4)}
+.pamt{font-family:var(--display);font-size:26px;letter-spacing:-.8px}
+.pdet{font-size:11px;color:var(--g4);font-weight:400;margin-left:4px}
+.btn-order{width:100%;padding:13px;border-radius:9px;background:var(--k);color:var(--w);font-size:14px;font-weight:500;letter-spacing:.2px;transition:all .15s;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-order:hover{background:var(--g8);transform:translateY(-1px)}
+.btn-order:active{transform:translateY(0)}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(14,14,14,.55);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.overlay.open{display:flex}
+.modal{background:var(--w);border-radius:20px;width:92%;max-width:500px;overflow:hidden;animation:mIn .2s var(--ease)}
+@keyframes mIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.mhead{padding:1.25rem 1.5rem;border-bottom:1px solid var(--g1);display:flex;align-items:center;justify-content:space-between}
+.mtitle{font-size:15px;font-weight:500}
+.mclose{width:30px;height:30px;border-radius:50%;border:1px solid var(--g1);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--g4);cursor:pointer;transition:all .12s;line-height:1}
+.mclose:hover{background:var(--g1);color:var(--k)}
+.mbody{padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:.9rem}
+.msummary{border:1px solid var(--g1);border-radius:12px;padding:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#FAFAF8}
+.msummary-info{display:flex;flex-direction:column;gap:2px}
+.msummary-name{font-size:14px;font-weight:500}
+.msummary-detail{font-size:12px;color:var(--g4)}
+.msummary-price{font-family:var(--display);font-size:22px;letter-spacing:-.5px;white-space:nowrap}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.ffield{display:flex;flex-direction:column;gap:4px}
+.flbl{font-size:10px;font-weight:500;letter-spacing:.7px;text-transform:uppercase;color:var(--g4)}
+.finp{padding:10px 12px;border:1px solid var(--g1);border-radius:8px;font-size:13px;color:var(--k);background:var(--w);font-family:inherit;outline:none;transition:border-color .12s;width:100%}
+.finp:focus{border-color:var(--k)}
+.mfoot{padding:1rem 1.5rem;border-top:1px solid var(--g1);display:flex;flex-direction:column;gap:.65rem}
+.pay-btn{width:100%;padding:12px;border-radius:8px;background:var(--k);color:var(--w);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s;border:none}
+.pay-btn:hover{background:var(--g8)}
+.pay-btn:disabled{opacity:.5;cursor:not-allowed}
+.secure-note{font-size:11px;color:var(--g4);text-align:center;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.secure-note::before,.secure-note::after{content:'';flex:1;height:1px;background:var(--g1)}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--k);color:var(--w);padding:.8rem 1.4rem;border-radius:10px;font-size:13px;z-index:300;opacity:0;transition:all .22s var(--ease);pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">OWN<span> it</span></a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-back">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="#9A9A9A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="nl-back">Back</span>
+    </a>
+    <div class="nav-divider"></div>
+    <div class="nav-studio-lbl" id="nl-studio">Studio</div>
+  </div>
+  <div class="nav-right">
+    <div class="lang-sw">
+      <button class="lang-btn on" onclick="setLang('en',this)">EN</button>
+      <button class="lang-btn" onclick="setLang('pt',this)">PT</button>
+      <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+    </div>
+    <button class="nav-cart" onclick="openOrder()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1h2l1.6 7.2h6.8l1-4.2H4.2" stroke="#111" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.2" cy="12" r=".9" fill="#111"/><circle cx="10.8" cy="12" r=".9" fill="#111"/></svg>
+      <span id="nl-cart">Order</span> · <span id="nav-price">29,90 €</span>
+    </button>
+  </div>
+</nav>
+
+<!-- STUDIO -->
+<div class="studio">
+
+  <!-- PREVIEW -->
+  <div class="preview">
+    <div class="garment-bar">
+      <div class="garment-sw">
+        <button class="gw on" onclick="setG(this,'ts')" id="gw-ts">T-shirt</button>
+        <button class="gw" onclick="setG(this,'hoodie')" id="gw-hoodie">Hoodie</button>
+        <button class="gw" onclick="setG(this,'cap')" id="gw-cap">Cap</button>
+      </div>
+      <div class="preview-hint" id="preview-hint">Click on the garment to reposition your design</div>
+    </div>
+
+    <div class="stage" id="stage">
+      <!-- T-SHIRT -->
+      <svg class="garment-svg on" id="g-ts" width="240" height="282" viewBox="0 0 280 300" xmlns="http://www.w3.org/2000/svg">
+        <path class="gfill" d="M95,22 C95,22 105,48 140,48 C175,48 185,22 185,22 L230,42 L258,58 L242,120 L210,108 L210,278 L70,278 L70,108 L38,120 L22,58 L50,42 Z" fill="#F0EFEA" stroke="#D4D4D0" stroke-width="1"/>
+        <path d="M70,108 L38,120 L22,58 L50,42 L95,22 C92,38 84,54 70,60 Z" fill="rgba(0,0,0,.04)"/>
+        <path d="M210,108 L242,120 L258,58 L230,42 L185,22 C188,38 196,54 210,60 Z" fill="rgba(0,0,0,.04)"/>
+        <path d="M95,22 C100,38 115,48 140,48 C165,48 180,38 185,22" fill="none" stroke="#C8C8C4" stroke-width="1"/>
+        <path d="M70,278 L210,278" stroke="#C8C8C4" stroke-width=".5"/>
+        <path d="M70,270 Q140,276 210,270" fill="none" stroke="#C8C8C4" stroke-width=".5"/>
+      </svg>
+      <!-- HOODIE -->
+      <svg class="garment-svg" id="g-hoodie" width="240" height="282" viewBox="0 0 280 320" xmlns="http://www.w3.org/2000/svg">
+        <path class="gfill" d="M100,24 C100,24 112,52 140,52 C168,52 180,24 180,24 L228,46 L256,64 L238,130 L206,116 L206,292 L74,292 L74,116 L42,130 L24,64 L52,46 Z" fill="#F0EFEA" stroke="#D4D4D0" stroke-width="1"/>
+        <path d="M74,116 L42,130 L24,64 L52,46 L100,24 C97,40 88,56 74,62 Z" fill="rgba(0,0,0,.04)"/>
+        <path d="M206,116 L238,130 L256,64 L228,46 L180,24 C183,40 192,56 206,62 Z" fill="rgba(0,0,0,.04)"/>
+        <ellipse cx="140" cy="24" rx="28" ry="10" fill="rgba(0,0,0,.025)" stroke="#C8C8C4" stroke-width=".8"/>
+        <rect x="74" y="284" width="132" height="8" rx="3" fill="rgba(0,0,0,.05)"/>
+        <rect x="42" y="122" width="32" height="140" rx="4" fill="rgba(0,0,0,.02)" stroke="#C8C8C4" stroke-width=".5"/>
+        <rect x="206" y="122" width="32" height="140" rx="4" fill="rgba(0,0,0,.02)" stroke="#C8C8C4" stroke-width=".5"/>
+      </svg>
+      <!-- CAP -->
+      <svg class="garment-svg" id="g-cap" width="260" height="200" viewBox="0 0 280 240" xmlns="http://www.w3.org/2000/svg">
+        <path class="gfill" d="M50,130 Q50,50 140,44 Q230,50 230,130 Q230,160 200,168 L80,168 Q50,160 50,130 Z" fill="#F0EFEA" stroke="#D4D4D0" stroke-width="1"/>
+        <path d="M80,168 Q140,180 200,168 Q210,172 210,176 Q140,192 70,176 Q70,172 80,168 Z" fill="#E4E4E0" stroke="#C8C8C4" stroke-width=".8"/>
+        <path d="M40,170 Q30,178 28,185 Q80,205 140,204 Q200,205 252,185 Q250,178 240,170 Q200,182 140,183 Q80,182 40,170 Z" fill="#DCDCD8" stroke="#C0C0BC" stroke-width=".8"/>
+        <path d="M90,130 Q140,124 190,130" fill="none" stroke="#C8C8C4" stroke-width=".8"/>
+        <ellipse cx="140" cy="46" rx="14" ry="6" fill="#D8D8D4" stroke="#C0C0BC" stroke-width=".8"/>
+        <rect x="133" y="40" width="14" height="6" rx="1" fill="#CCCCCC" stroke="#C0C0BC" stroke-width=".5"/>
+      </svg>
+
+      <div class="otxt" id="otxt"></div>
+      <img class="oimg" id="oimg" alt="custom design"/>
+    </div>
+
+    <div class="preview-foot">
+      <div class="color-strip">
+        <span class="clbl" id="clbl">Colour</span>
+        <div class="cdots">
+          <div class="cd on light" style="background:#F0EFEA" title="White" onclick="setColor(this,'#F0EFEA','white',true)"></div>
+          <div class="cd" style="background:#909090" title="Grey" onclick="setColor(this,'#909090','grey',false)"></div>
+          <div class="cd" style="background:#1A1A1A" title="Black" onclick="setColor(this,'#1A1A1A','black',false)"></div>
+        </div>
+      </div>
+      <div class="price-pill"><span id="ppv">29,90</span> €</div>
+    </div>
+  </div>
+
+  <!-- PANEL -->
+  <div class="panel">
+    <div class="tabs">
+      <button class="tab on" onclick="swtab('txt',this)" id="tab-txt">Text</button>
+      <button class="tab" onclick="swtab('img',this)" id="tab-img">Image</button>
+      <button class="tab" onclick="swtab('tpl',this)" id="tab-tpl">Templates</button>
+    </div>
+
+    <div class="panel-body">
+
+      <!-- TEXT TAB -->
+      <div id="t-txt">
+        <label class="lbl" id="l-msg">Your message</label>
+        <input class="inp" type="text" id="ctxt" placeholder="ex: Make it yours." oninput="upTxt()" maxlength="26"/>
+        <div class="row2" style="margin-top:10px">
+          <div>
+            <label class="lbl" id="l-font">Font</label>
+            <select class="sel" id="fsel" onchange="upTxt()">
+              <option value="'Archivo',sans-serif">Archivo</option>
+              <option value="'Archivo Black',sans-serif">Archivo Black</option>
+              <option value="Georgia,serif">Georgia</option>
+              <option value="monospace">Monospace</option>
+              <option value="Impact,sans-serif">Impact</option>
+            </select>
+          </div>
+          <div>
+            <label class="lbl" id="l-weight">Weight</label>
+            <select class="sel" id="wsel" onchange="upTxt()">
+              <option value="300">Light</option>
+              <option value="400">Regular</option>
+              <option value="500" selected>Medium</option>
+              <option value="700">Bold</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <label class="lbl" id="l-size">Size</label>
+          <div class="slrow">
+            <input type="range" min="12" max="36" value="20" id="fsize" step="1" oninput="upTxt();document.getElementById('fsv').textContent=this.value+'px'"/>
+            <span class="slv" id="fsv">20px</span>
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <label class="lbl" id="l-tcolor">Text colour</label>
+          <div class="tc-row">
+            <div class="tc light" style="background:#F0EFEA" onclick="setTC(this,'#F0EFEA')"></div>
+            <div class="tc" style="background:#909090" onclick="setTC(this,'#909090')"></div>
+            <div class="tc on" style="background:#1A1A1A" onclick="setTC(this,'#1A1A1A')"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMAGE TAB -->
+      <div id="t-img" style="display:none">
+        <label class="lbl" id="l-upload">Logo or illustration</label>
+        <div class="ubox" onclick="document.getElementById('fi').click()">
+          <div class="uplus">+</div>
+          <div class="umain" id="l-drop">Click or drag to import</div>
+          <div class="usub" id="l-fmt">PNG, SVG — transparent background recommended</div>
+        </div>
+        <input type="file" id="fi" accept="image/*" style="display:none" onchange="loadImg(event)"/>
+        <div class="ictrl" id="ictrl">
+          <label class="lbl" style="margin-top:8px" id="l-imgsize">Image size</label>
+          <div class="slrow">
+            <input type="range" min="40" max="150" value="90" id="isize" step="1" oninput="upImg();document.getElementById('isv').textContent=this.value+'px'"/>
+            <span class="slv" id="isv">90px</span>
+          </div>
+          <div class="rm" onclick="clrImg()" id="l-rm">Remove image</div>
+        </div>
+        <div style="margin-top:1rem">
+          <label class="lbl" id="l-quality">Quality guide</label>
+          <div class="qcard">
+            <div class="qhead"><div class="qi">!</div><div class="qh" id="q-head">For the best print result</div></div>
+            <div class="qrow"><div class="qdot ok"></div><div class="qt" id="q1"><b>PNG or SVG</b> with transparent background</div></div>
+            <div class="qrow"><div class="qdot ok"></div><div class="qt" id="q2"><b>300 DPI min.</b> — at least 150×150 px</div></div>
+            <div class="qrow"><div class="qdot ok"></div><div class="qt" id="q3"><b>High contrast</b> for fine detail</div></div>
+            <div class="qrow"><div class="qdot warn"></div><div class="qt" id="q4">Avoid <b>compressed JPGs</b></div></div>
+            <div class="qrow"><div class="qdot warn"></div><div class="qt" id="q5">Avoid <b>screenshots</b> (72 DPI)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEMPLATES TAB -->
+      <div id="t-tpl" style="display:none">
+        <label class="lbl" id="l-tpl">Ready-made styles</label>
+        <div class="tgrid" id="tgrid"></div>
+      </div>
+
+    </div>
+
+    <!-- FOOT -->
+    <div class="panel-foot">
+      <div class="szrow" id="szrow">
+        <button class="sz" onclick="setSz(this,'XS')">XS</button>
+        <button class="sz on" onclick="setSz(this,'S')">S</button>
+        <button class="sz" onclick="setSz(this,'M')">M</button>
+        <button class="sz" onclick="setSz(this,'L')">L</button>
+        <button class="sz" onclick="setSz(this,'XL')">XL</button>
+      </div>
+      <div class="prow">
+        <div class="plbl" id="l-total">Total</div>
+        <div><span class="pamt" id="pamt">29,90</span><span class="pdet" id="l-ship">€ · shipping included</span></div>
+      </div>
+      <button class="btn-order" id="l-order" onclick="openOrder()">
+        <span>Add to cart</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="mhead">
+      <div class="mtitle" id="m-title">Complete your order</div>
+      <button class="mclose" onclick="closeModal()">×</button>
+    </div>
+    <div class="mbody">
+      <div class="msummary">
+        <div class="msummary-info">
+          <div class="msummary-name" id="m-name">T-shirt · White · S</div>
+          <div class="msummary-detail" id="m-detail">Custom design · Shipping included</div>
+        </div>
+        <div class="msummary-price" id="m-price">29,90 €</div>
+      </div>
+      <div class="frow2">
+        <div class="ffield"><label class="flbl" id="ml-fn">First name</label><input class="finp" id="f-fn" type="text" placeholder="Alex"/></div>
+        <div class="ffield"><label class="flbl" id="ml-ln">Last name</label><input class="finp" id="f-ln" type="text" placeholder="Dupont"/></div>
+      </div>
+      <div class="ffield"><label class="flbl" id="ml-em">Email</label><input class="finp" id="f-em" type="email" placeholder="you@email.com"/></div>
+      <div class="ffield"><label class="flbl" id="ml-ad">Delivery address</label><input class="finp" id="f-ad" type="text" placeholder="Rua da Liberdade, 42"/></div>
+      <div class="frow2">
+        <div class="ffield"><label class="flbl" id="ml-ci">City</label><input class="finp" id="f-ci" type="text" placeholder="Lisbon"/></div>
+        <div class="ffield"><label class="flbl" id="ml-zp">Postal code</label><input class="finp" id="f-zp" type="text" placeholder="1250-000"/></div>
+      </div>
+      <div class="ffield">
+        <label class="flbl" id="ml-co">Country</label>
+        <select class="finp" id="f-co">
+          <option value="PT">Portugal</option>
+          <option value="FR">France</option>
+          <option value="ES">Spain</option>
+          <option value="DE">Germany</option>
+          <option value="IT">Italy</option>
+          <option value="NL">Netherlands</option>
+          <option value="BE">Belgium</option>
+          <option value="BR">Brazil</option>
+          <option value="US">United States</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="pay-btn" id="pay-btn" onclick="submitOrder()">
+        <span id="pay-label">Pay with Stripe</span> · <span id="pay-price">29,90 €</span>
+      </button>
+      <div class="secure-note" id="ml-secure">Secure payment · SSL · Stripe</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── STATE ── */
+const PR={ts:{XS:27.9,S:29.9,M:29.9,L:31.9,XL:33.9},hoodie:{XS:39.9,S:42.9,M:42.9,L:44.9,XL:46.9},cap:{OS:24.9}};
+const TPLS=[
+  {n:'Minimal',m:'Clean',sc:'#F0EFEA',tx:'own it.',fc:'#1A1A1A',fw:'300',fs:'18',ff:"'Archivo',sans-serif"},
+  {n:'Noir',m:'Bold',sc:'#1A1A1A',tx:'OWN IT',fc:'#F0EFEA',fw:'700',fs:'26',ff:"'Archivo Black',sans-serif"},
+  {n:'Serif',m:'Elegant',sc:'#F0EFEA',tx:'Make it yours.',fc:'#1A1A1A',fw:'300',fs:'14',ff:'Georgia,serif'},
+  {n:'Mono',m:'Tech',sc:'#1A1A1A',tx:'<own.it>',fc:'#909090',fw:'400',fs:'13',ff:'monospace'},
+  {n:'Grey',m:'Subtle',sc:'#909090',tx:'studio.',fc:'#F0EFEA',fw:'400',fs:'18',ff:"'Archivo',sans-serif"},
+  {n:'Impact',m:'Strong',sc:'#909090',tx:'YOURS',fc:'#1A1A1A',fw:'700',fs:'28',ff:'Impact,sans-serif'},
+];
+let curG='ts', curSz='S', curFC='#1A1A1A', curColor='white', curActiveTpl=null;
+const fmt=v=>v.toFixed(2).replace('.',',');
+
+/* ── INIT from URL param ── */
+const urlG = new URLSearchParams(location.search).get('product');
+if(urlG && ['ts','tshirt','hoodie','cap'].includes(urlG)){
+  const mapped = urlG==='tshirt'?'ts':urlG;
+  setTimeout(()=>setG(document.getElementById('gw-'+mapped), mapped), 50);
+}
+
+/* ── GARMENT ── */
+function setG(btn, g){
+  document.querySelectorAll('.gw').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.garment-svg').forEach(s=>s.classList.remove('on'));
+  document.getElementById('g-'+g).classList.add('on');
+  curG=g;
+  document.getElementById('szrow').style.display=g==='cap'?'none':'flex';
+  updPrice();
+}
+
+/* ── COLOR ── */
+function setColor(el, hex, name, light){
+  document.querySelectorAll('.cd').forEach(d=>d.classList.remove('on'));
+  el.classList.add('on');
+  curColor=name;
+  document.querySelectorAll('.gfill').forEach(p=>{
+    p.setAttribute('fill', hex);
+    p.setAttribute('stroke', light ? '#D4D4D0' : '#2A2A2A');
+  });
+}
+
+/* ── TEXT ── */
+function setTC(el, hex){
+  document.querySelectorAll('.tc').forEach(d=>d.classList.remove('on'));
+  el.classList.add('on');
+  curFC=hex;
+  document.getElementById('otxt').style.color=hex;
+}
+function upTxt(){
+  const st=document.getElementById('otxt');
+  const txt=document.getElementById('ctxt').value;
+  st.textContent=txt;
+  st.style.fontFamily=document.getElementById('fsel').value;
+  st.style.fontWeight=document.getElementById('wsel').value;
+  st.style.fontSize=document.getElementById('fsize').value+'px';
+  st.style.color=curFC;
+  if(txt) clrImg();
+}
+
+/* ── IMAGE ── */
+function loadImg(e){
+  const f=e.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    const img=document.getElementById('oimg');
+    img.src=ev.target.result;
+    img.style.display='block';
+    img.style.width=img.style.height='90px';
+    document.getElementById('otxt').textContent='';
+    document.getElementById('ctxt').value='';
+    document.getElementById('ictrl').style.display='flex';
+  };
+  r.readAsDataURL(f);
+}
+function upImg(){
+  const s=document.getElementById('isize').value;
+  const i=document.getElementById('oimg');
+  if(i){ i.style.width=i.style.height=s+'px'; }
+}
+function clrImg(){
+  const i=document.getElementById('oimg'); if(i) i.style.display='none';
+  document.getElementById('ictrl').style.display='none';
+  try{ document.getElementById('fi').value=''; }catch(e){}
+}
+
+/* ── TABS ── */
+function swtab(n, btn){
+  ['txt','img','tpl'].forEach(t=>document.getElementById('t-'+t).style.display=t===n?'block':'none');
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+/* ── SIZE & PRICE ── */
+function setSz(btn, s){
+  document.querySelectorAll('.sz').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  curSz=s; updPrice();
+}
+function updPrice(){
+  const p = PR[curG]?.[curSz] || PR[curG]?.OS || 29.9;
+  const pf = fmt(p);
+  document.getElementById('pamt').textContent=pf;
+  document.getElementById('ppv').textContent=pf;
+  document.getElementById('nav-price').textContent=pf+' €';
+  document.getElementById('pay-price').textContent=pf+' €';
+  document.getElementById('m-price').textContent=pf+' €';
+}
+
+/* ── TEMPLATES ── */
+function buildTpl(){
+  const g=document.getElementById('tgrid');
+  TPLS.forEach((t,idx)=>{
+    const el=document.createElement('div'); el.className='tpl';
+    el.innerHTML=`<div class="tsw" style="background:${t.sc}"></div><div class="tn">${t.n}</div><div class="tm">${t.m}</div>`;
+    el.onclick=()=>{
+      document.querySelectorAll('.tpl').forEach(x=>x.classList.remove('on'));
+      el.classList.add('on');
+      // Apply shirt color
+      document.querySelectorAll('.gfill').forEach(p=>{
+        p.setAttribute('fill',t.sc);
+        p.setAttribute('stroke', t.sc==='#F0EFEA'?'#D4D4D0':'#2A2A2A');
+      });
+      // Apply text
+      const st=document.getElementById('otxt');
+      st.textContent=t.tx; st.style.fontFamily=t.ff;
+      st.style.fontWeight=t.fw; st.style.fontSize=t.fs+'px'; st.style.color=t.fc;
+      curFC=t.fc; clrImg();
+      document.getElementById('ctxt').value=t.tx;
+    };
+    g.appendChild(el);
+  });
+}
+
+/* ── ORDER MODAL ── */
+function openOrder(){
+  const gNames={ts:'T-shirt',hoodie:'Hoodie',cap:'Cap'};
+  const colorLabel=curColor.charAt(0).toUpperCase()+curColor.slice(1);
+  const sz=curG==='cap'?'One size':curSz;
+  document.getElementById('m-name').textContent=`${gNames[curG]} · ${colorLabel} · ${sz}`;
+  const txt=document.getElementById('ctxt').value;
+  document.getElementById('m-detail').textContent=txt?`"${txt}" · Shipping included`:'Custom design · Shipping included';
+  const p=fmt(PR[curG]?.[curSz]||PR[curG]?.OS||29.9);
+  document.getElementById('m-price').textContent=p+' €';
+  document.getElementById('pay-price').textContent=p+' €';
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+async function submitOrder(){
+  const fn=document.getElementById('f-fn').value.trim();
+  const em=document.getElementById('f-em').value.trim();
+  const ad=document.getElementById('f-ad').value.trim();
+  if(!fn||!em||!ad){ showToast('Please fill in all required fields.'); return; }
+  const btn=document.getElementById('pay-btn');
+  btn.disabled=true;
+  document.getElementById('pay-label').textContent='Processing...';
+  await new Promise(r=>setTimeout(r,1800));
+  closeModal();
+  btn.disabled=false;
+  document.getElementById('pay-label').textContent='Pay with Stripe';
+  showToast('Order placed! Check your email for confirmation.');
+  // In production: POST to /api/checkout → redirect to Stripe
+}
+
+/* ── TOAST ── */
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3600);
+}
+
+/* ── LANG ── */
+const L={
+  en:{
+    back:'Back',studio:'Studio',cart:'Order',
+    clbl:'Colour','preview-hint':'Click on the garment to position your design',
+    tabs:['Text','Image','Templates'],
+    'l-msg':'Your message','l-font':'Font','l-weight':'Weight','l-size':'Size','l-tcolor':'Text colour',
+    'l-upload':'Logo or illustration','l-drop':'Click or drag to import','l-fmt':'PNG, SVG — transparent background recommended',
+    'l-imgsize':'Image size','l-rm':'Remove image','l-quality':'Quality guide',
+    'q-head':'For the best print result',
+    q:['<b>PNG or SVG</b> with transparent background','<b>300 DPI min.</b> — at least 150×150 px','<b>High contrast</b> for fine detail','Avoid <b>compressed JPGs</b>','Avoid <b>screenshots</b> (72 DPI)'],
+    'l-tpl':'Ready-made styles','l-total':'Total','l-ship':'€ · shipping included','l-order':'Add to cart',
+    gw:['T-shirt','Hoodie','Cap'],
+    'm-title':'Complete your order',
+    ml:['First name','Last name','Email','Delivery address','City','Postal code','Country'],
+    'pay-label':'Pay with Stripe','ml-secure':'Secure payment · SSL · Stripe',
+  },
+  pt:{
+    back:'Voltar',studio:'Estúdio',cart:'Encomendar',
+    clbl:'Cor','preview-hint':'Clica no vêtement para posicionar o teu design',
+    tabs:['Texto','Imagem','Templates'],
+    'l-msg':'A tua mensagem','l-font':'Fonte','l-weight':'Espessura','l-size':'Tamanho','l-tcolor':'Cor do texto',
+    'l-upload':'Logo ou ilustração','l-drop':'Clica ou arrasta para importar','l-fmt':'PNG, SVG — fundo transparente recomendado',
+    'l-imgsize':'Tamanho da imagem','l-rm':'Remover imagem','l-quality':'Guia de qualidade',
+    'q-head':'Para o melhor resultado de impressão',
+    q:['<b>PNG ou SVG</b> com fundo transparente','<b>300 DPI mín.</b> — pelo menos 150×150 px','<b>Alto contraste</b> para detalhes finos','Evita <b>JPGs comprimidos</b>','Evita <b>capturas de ecrã</b> (72 DPI)'],
+    'l-tpl':'Estilos prontos','l-total':'Total','l-ship':'€ · envio incluído','l-order':'Adicionar ao carrinho',
+    gw:['T-shirt','Hoodie','Boné'],
+    'm-title':'Completa a tua encomenda',
+    ml:['Nome','Apelido','Email','Morada','Cidade','Código postal','País'],
+    'pay-label':'Pagar com Stripe','ml-secure':'Pagamento seguro · SSL · Stripe',
+  },
+  fr:{
+    back:'Retour',studio:'Studio',cart:'Commander',
+    clbl:'Couleur','preview-hint':'Cliquez sur le vêtement pour positionner votre design',
+    tabs:['Texte','Image','Templates'],
+    'l-msg':'Votre message','l-font':'Police','l-weight':'Graisse','l-size':'Taille','l-tcolor':'Couleur du texte',
+    'l-upload':'Logo ou illustration','l-drop':'Cliquez ou glissez pour importer','l-fmt':'PNG, SVG — fond transparent recommandé',
+    'l-imgsize':'Taille de l\'image','l-rm':'Supprimer l\'image','l-quality':'Guide qualité',
+    'q-head':'Pour un rendu optimal',
+    q:['<b>PNG ou SVG</b> avec fond transparent','<b>300 DPI min.</b> — au moins 150×150 px','<b>Contraste élevé</b> pour les détails fins','Évitez les <b>JPG compressés</b>','Évitez les <b>captures d\'écran</b> (72 DPI)'],
+    'l-tpl':'Styles prêts à l\'emploi','l-total':'Total','l-ship':'€ · livraison incluse','l-order':'Ajouter au panier',
+    gw:['T-shirt','Pull','Casquette'],
+    'm-title':'Finaliser votre commande',
+    ml:['Prénom','Nom','Email','Adresse de livraison','Ville','Code postal','Pays'],
+    'pay-label':'Payer avec Stripe','ml-secure':'Paiement sécurisé · SSL · Stripe',
+  }
+};
+
+function setLang(l, btn){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const t=L[l];
+  document.getElementById('nl-back').textContent=t.back;
+  document.getElementById('nl-studio').textContent=t.studio;
+  document.getElementById('nl-cart').textContent=t.cart;
+  document.getElementById('clbl').textContent=t.clbl;
+  document.getElementById('preview-hint').textContent=t['preview-hint'];
+  // Tabs
+  ['tab-txt','tab-img','tab-tpl'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.textContent=t.tabs[i]});
+  // Garment buttons
+  const gws=[document.getElementById('gw-ts'),document.getElementById('gw-hoodie'),document.getElementById('gw-cap')];
+  t.gw.forEach((v,i)=>{if(gws[i])gws[i].textContent=v});
+  // Labels
+  ['l-msg','l-font','l-weight','l-size','l-tcolor','l-upload','l-drop','l-fmt','l-imgsize','l-rm','l-quality','q-head','l-tpl','l-total','l-ship'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.textContent=t[id]||el.textContent;
+  });
+  document.getElementById('l-order').innerHTML=t['l-order']+' <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  t.q.forEach((v,i)=>{const el=document.getElementById('q'+(i+1));if(el)el.innerHTML=v});
+  // Modal
+  document.getElementById('m-title').textContent=t['m-title'];
+  const mlIds=['ml-fn','ml-ln','ml-em','ml-ad','ml-ci','ml-zp','ml-co'];
+  t.ml.forEach((v,i)=>{const el=document.getElementById(mlIds[i]);if(el)el.textContent=v});
+  document.getElementById('pay-label').textContent=t['pay-label'];
+  document.getElementById('ml-secure').textContent=t['ml-secure'];
+}
+
+/* ── INIT ── */
+buildTpl();
+updPrice();
+</script>
+</body>
+</html>
