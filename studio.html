@@ -129,33 +129,6 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
 .btn-order:hover{background:var(--g8);transform:translateY(-1px)}
 .btn-order:active{transform:translateY(0)}
 
-/* MODAL */
-.overlay{display:none;position:fixed;inset:0;background:rgba(14,14,14,.55);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-.overlay.open{display:flex}
-.modal{background:var(--w);border-radius:20px;width:92%;max-width:500px;overflow:hidden;animation:mIn .2s var(--ease)}
-@keyframes mIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.mhead{padding:1.25rem 1.5rem;border-bottom:1px solid var(--g1);display:flex;align-items:center;justify-content:space-between}
-.mtitle{font-size:15px;font-weight:500}
-.mclose{width:30px;height:30px;border-radius:50%;border:1px solid var(--g1);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--g4);cursor:pointer;transition:all .12s;line-height:1}
-.mclose:hover{background:var(--g1);color:var(--k)}
-.mbody{padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:.9rem}
-.msummary{border:1px solid var(--g1);border-radius:12px;padding:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#FAFAF8}
-.msummary-info{display:flex;flex-direction:column;gap:2px}
-.msummary-name{font-size:14px;font-weight:500}
-.msummary-detail{font-size:12px;color:var(--g4)}
-.msummary-price{font-family:var(--display);font-size:22px;letter-spacing:-.5px;white-space:nowrap}
-.frow2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-.ffield{display:flex;flex-direction:column;gap:4px}
-.flbl{font-size:10px;font-weight:500;letter-spacing:.7px;text-transform:uppercase;color:var(--g4)}
-.finp{padding:10px 12px;border:1px solid var(--g1);border-radius:8px;font-size:13px;color:var(--k);background:var(--w);font-family:inherit;outline:none;transition:border-color .12s;width:100%}
-.finp:focus{border-color:var(--k)}
-.mfoot{padding:1rem 1.5rem;border-top:1px solid var(--g1);display:flex;flex-direction:column;gap:.65rem}
-.pay-btn{width:100%;padding:12px;border-radius:8px;background:var(--k);color:var(--w);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s;border:none}
-.pay-btn:hover{background:var(--g8)}
-.pay-btn:disabled{opacity:.5;cursor:not-allowed}
-.secure-note{font-size:11px;color:var(--g4);text-align:center;display:flex;align-items:center;justify-content:center;gap:.5rem}
-.secure-note::before,.secure-note::after{content:'';flex:1;height:1px;background:var(--g1)}
-
 /* TOAST */
 .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(10px);background:var(--k);color:var(--w);padding:.8rem 1.4rem;border-radius:10px;font-size:13px;z-index:300;opacity:0;transition:all .22s var(--ease);pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -360,56 +333,6 @@ button{cursor:pointer;font-family:inherit;border:none;background:none}
   </div>
 </div>
 
-<!-- ORDER MODAL -->
-<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="mhead">
-      <div class="mtitle" id="m-title">Complete your order</div>
-      <button class="mclose" onclick="closeModal()">×</button>
-    </div>
-    <div class="mbody">
-      <div class="msummary">
-        <div class="msummary-info">
-          <div class="msummary-name" id="m-name">T-shirt · White · S</div>
-          <div class="msummary-detail" id="m-detail">Custom design · Shipping included</div>
-        </div>
-        <div class="msummary-price" id="m-price">29,90 €</div>
-      </div>
-      <div class="frow2">
-        <div class="ffield"><label class="flbl" id="ml-fn">First name</label><input class="finp" id="f-fn" type="text" placeholder="Alex"/></div>
-        <div class="ffield"><label class="flbl" id="ml-ln">Last name</label><input class="finp" id="f-ln" type="text" placeholder="Dupont"/></div>
-      </div>
-      <div class="ffield"><label class="flbl" id="ml-em">Email</label><input class="finp" id="f-em" type="email" placeholder="you@email.com"/></div>
-      <div class="ffield"><label class="flbl" id="ml-ad">Delivery address</label><input class="finp" id="f-ad" type="text" placeholder="Rua da Liberdade, 42"/></div>
-      <div class="frow2">
-        <div class="ffield"><label class="flbl" id="ml-ci">City</label><input class="finp" id="f-ci" type="text" placeholder="Lisbon"/></div>
-        <div class="ffield"><label class="flbl" id="ml-zp">Postal code</label><input class="finp" id="f-zp" type="text" placeholder="1250-000"/></div>
-      </div>
-      <div class="ffield">
-        <label class="flbl" id="ml-co">Country</label>
-        <select class="finp" id="f-co">
-          <option value="PT">Portugal</option>
-          <option value="FR">France</option>
-          <option value="ES">Spain</option>
-          <option value="DE">Germany</option>
-          <option value="IT">Italy</option>
-          <option value="NL">Netherlands</option>
-          <option value="BE">Belgium</option>
-          <option value="BR">Brazil</option>
-          <option value="US">United States</option>
-          <option value="OTHER">Other</option>
-        </select>
-      </div>
-    </div>
-    <div class="mfoot">
-      <button class="pay-btn" id="pay-btn" onclick="submitOrder()">
-        <span id="pay-label">Pay with Stripe</span> · <span id="pay-price">29,90 €</span>
-      </button>
-      <div class="secure-note" id="ml-secure">Secure payment · SSL · Stripe</div>
-    </div>
-  </div>
-</div>
-
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -548,38 +471,34 @@ function buildTpl(){
   });
 }
 
-/* ── ORDER MODAL ── */
-function openOrder(){
-  const gNames={ts:'T-shirt',hoodie:'Hoodie',cap:'Cap'};
-  const colorLabel=curColor.charAt(0).toUpperCase()+curColor.slice(1);
-  const sz=curG==='cap'?'One size':curSz;
-  document.getElementById('m-name').textContent=`${gNames[curG]} · ${colorLabel} · ${sz}`;
-  const txt=document.getElementById('ctxt').value;
-  document.getElementById('m-detail').textContent=txt?`"${txt}" · Shipping included`:'Custom design · Shipping included';
-  const p=fmt(PR[curG]?.[curSz]||PR[curG]?.OS||29.9);
-  document.getElementById('m-price').textContent=p+' €';
-  document.getElementById('pay-price').textContent=p+' €';
-  document.getElementById('overlay').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeModal(){
-  document.getElementById('overlay').classList.remove('open');
-  document.body.style.overflow='';
-}
-async function submitOrder(){
-  const fn=document.getElementById('f-fn').value.trim();
-  const em=document.getElementById('f-em').value.trim();
-  const ad=document.getElementById('f-ad').value.trim();
-  if(!fn||!em||!ad){ showToast('Please fill in all required fields.'); return; }
-  const btn=document.getElementById('pay-btn');
-  btn.disabled=true;
-  document.getElementById('pay-label').textContent='Processing...';
-  await new Promise(r=>setTimeout(r,1800));
-  closeModal();
-  btn.disabled=false;
-  document.getElementById('pay-label').textContent='Pay with Stripe';
-  showToast('Order placed! Check your email for confirmation.');
-  // In production: POST to /api/checkout → redirect to Stripe
+/* ── ORDER — direct Stripe redirect ── */
+async function openOrder(){
+  const btn=document.getElementById('l-order');
+  btn.style.opacity='.6';
+  btn.style.pointerEvents='none';
+  btn.innerHTML='<span>Redirecting...</span>';
+  try{
+    const res=await fetch('/api/checkout',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        productType:{ts:'tshirt',hoodie:'hoodie',cap:'cap'}[curG],
+        color:curColor,
+        size:curG==='cap'?'OS':curSz,
+        text:document.getElementById('ctxt').value||'',
+        customerEmail:'',
+      })
+    });
+    const data=await res.json();
+    if(data.url){window.location.href=data.url;}
+    else{throw new Error(data.error||'Unknown error');}
+  }catch(err){
+    console.error(err);
+    showToast('Payment error — please try again.');
+    btn.style.opacity='1';
+    btn.style.pointerEvents='auto';
+    btn.innerHTML='<span>Add to cart</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
 }
 
 /* ── TOAST ── */
