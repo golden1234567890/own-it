@@ -22,9 +22,9 @@ export default async function handler(req, res) {
 
   // Prix en centimes
   const PRICES = {
-    tshirt: { XS: 2790, S: 2990, M: 2990, L: 3190, XL: 3390 },
-    hoodie: { XS: 3990, S: 4290, M: 4290, L: 4490, XL: 4690 },
-    cap:    { OS: 2490 }
+    tshirt: { XS: 2490, S: 2490, M: 2490, L: 2490, XL: 2490 },
+    hoodie: { XS: 3990, S: 3990, M: 3990, L: 3990, XL: 3990 },
+    cap:    { OS: 1990 }
   };
 
   const NAMES = {
