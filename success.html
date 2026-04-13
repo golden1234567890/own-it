@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Own It — Order confirmed!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Archivo+Black&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--k:#0E0E0E;--w:#F5F4F0;--g4:#9A9A9A;--g2:#D4D4D4;--g1:#EBEBEB;--g6:#5A5A5A;--display:'Archivo Black',sans-serif;--body:'Archivo',sans-serif;--ease:cubic-bezier(.4,0,.2,1)}
+body{font-family:var(--body);background:var(--k);color:var(--w);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:60px;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-logo{font-family:var(--display);font-size:20px;letter-spacing:-.5px;color:var(--w)}
+.nav-logo span{color:rgba(255,255,255,.35);font-family:var(--body);font-weight:300}
+
+.main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 2rem;text-align:center}
+
+.check-wrap{margin:0 auto 2.5rem;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+.check-circle{width:80px;height:80px;border-radius:50%;background:var(--w);display:flex;align-items:center;justify-content:center;margin:0 auto}
+.check-circle svg{width:36px;height:36px}
+
+.title{font-family:var(--display);font-size:clamp(36px,6vw,64px);letter-spacing:-2px;line-height:1;margin-bottom:.75rem;animation:fadeUp .6s .15s var(--ease) both}
+.subtitle{font-size:16px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.65;max-width:420px;margin:0 auto 3rem;animation:fadeUp .6s .25s var(--ease) both}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;max-width:640px;width:100%;margin:0 auto 3rem;animation:fadeUp .6s .35s var(--ease) both}
+.step{background:#1A1A1A;padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:.5rem}
+.step-num{font-family:var(--display);font-size:32px;color:rgba(255,255,255,.12);letter-spacing:-1px;line-height:1}
+.step-title{font-size:13px;font-weight:500;color:var(--w)}
+.step-desc{font-size:12px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.5}
+
+.actions{display:flex;align-items:center;gap:1rem;justify-content:center;animation:fadeUp .6s .45s var(--ease) both}
+.btn-white{padding:12px 28px;border-radius:8px;background:var(--w);color:var(--k);font-size:14px;font-weight:500;letter-spacing:.2px;cursor:pointer;transition:opacity .15s;font-family:inherit;border:none}
+.btn-white:hover{opacity:.88}
+.btn-ghost{padding:12px 22px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);font-size:14px;font-weight:400;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn-ghost:hover{border-color:rgba(255,255,255,.35);color:var(--w)}
+
+.footer-note{margin-top:2.5rem;font-size:12px;color:rgba(255,255,255,.25);animation:fadeUp .6s .5s var(--ease) both}
+.footer-note a{color:rgba(255,255,255,.4);border-bottom:1px solid rgba(255,255,255,.15)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">OWN<span> it</span></div>
+</nav>
+
+<div class="main">
+  <div class="check-wrap">
+    <div class="check-circle">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 18l7 7 13-13" stroke="#0E0E0E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <h1 class="title" id="title">Order confirmed.</h1>
+  <p class="subtitle" id="subtitle">Your garment is being prepared. You'll receive a confirmation email shortly with your order details and tracking link.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title" id="s1t">Order received</div>
+      <div class="step-desc" id="s1d">Payment confirmed. Your design is being processed.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title" id="s2t">Production</div>
+      <div class="step-desc" id="s2d">Printed in Portugal by Gelato within 48 hours.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title" id="s3t">Delivery</div>
+      <div class="step-desc" id="s3d">Shipped with tracking. Arrives in 5–7 business days.</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <a href="index.html"><button class="btn-white" id="btn-home">Back to home</button></a>
+    <a href="studio.html"><button class="btn-ghost" id="btn-studio">Create another</button></a>
+  </div>
+
+  <div class="footer-note" id="footer-note">
+    Questions? Contact us at <a href="mailto:hello@own-it.studio">hello@own-it.studio</a>
+  </div>
+</div>
+
+<script>
+const L={
+  en:{
+    title:'Order confirmed.',
+    subtitle:'Your garment is being prepared. You\'ll receive a confirmation email shortly with your order details and tracking link.',
+    s1t:'Order received',s1d:'Payment confirmed. Your design is being processed.',
+    s2t:'Production',s2d:'Printed in Portugal by Gelato within 48 hours.',
+    s3t:'Delivery',s3d:'Shipped with tracking. Arrives in 5–7 business days.',
+    'btn-home':'Back to home','btn-studio':'Create another',
+    'footer-note':'Questions? Contact us at'
+  },
+  pt:{
+    title:'Encomenda confirmada.',
+    subtitle:'O teu vêtement está a ser preparado. Receberás em breve um email de confirmação com os detalhes e o link de rastreamento.',
+    s1t:'Encomenda recebida',s1d:'Pagamento confirmado. O teu design está a ser processado.',
+    s2t:'Produção',s2d:'Impresso em Portugal pela Gelato em 48 horas.',
+    s3t:'Entrega',s3d:'Enviado com rastreamento. Chega em 5 a 7 dias úteis.',
+    'btn-home':'Voltar ao início','btn-studio':'Criar outro',
+    'footer-note':'Dúvidas? Contacta-nos em'
+  },
+  fr:{
+    title:'Commande confirmée.',
+    subtitle:'Ton vêtement est en cours de préparation. Tu recevras bientôt un email de confirmation avec les détails et le lien de suivi.',
+    s1t:'Commande reçue',s1d:'Paiement confirmé. Ton design est en cours de traitement.',
+    s2t:'Production',s2d:'Imprimé au Portugal par Gelato sous 48 heures.',
+    s3t:'Livraison',s3d:'Expédié avec suivi. Livré en 5 à 7 jours ouvrés.',
+    'btn-home':'Retour à l\'accueil','btn-studio':'Créer un autre',
+    'footer-note':'Des questions ? Contacte-nous à'
+  }
+};
+
+// Detect lang from URL or browser
+const urlLang = new URLSearchParams(location.search).get('lang');
+const browserLang = navigator.language?.slice(0,2);
+const lang = urlLang || (browserLang === 'pt' ? 'pt' : browserLang === 'fr' ? 'fr' : 'en');
+const t = L[lang] || L.en;
+
+Object.keys(t).forEach(id => {
+  const el = document.getElementById(id);
+  if(el && id !== 'footer-note') el.textContent = t[id];
+});
+// Footer note has a link inside
+const fn = document.getElementById('footer-note');
+if(fn) fn.innerHTML = `${t['footer-note']} <a href="mailto:hello@own-it.studio">hello@own-it.studio</a>`;
+</script>
+</body>
+</html>
