@@ -1,17 +1,34 @@
 // api/webhook.js — Vercel Serverless Function
 // Reçoit les événements Stripe et déclenche la commande Gelato
 
+// IMPORTANT: Désactive le body parser de Vercel pour que Stripe puisse vérifier la signature
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+async function getRawBody(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on('data', chunk => chunks.push(chunk));
+    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('error', reject);
+  });
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
   const sig    = req.headers['stripe-signature'];
+  const rawBody = await getRawBody(req);
 
   let event;
   try {
     // Vérifie la signature du webhook pour sécurité
     event = stripe.webhooks.constructEvent(
-      req.body,
+      rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     );
